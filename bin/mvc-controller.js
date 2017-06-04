@@ -1,0 +1,74 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const program = require('commander');
+
+program
+    .parse(process.argv);
+
+const path = require('path');
+const fs = require('fs');
+const controllerName = program.args[0];
+const type = program.args[1] || 'resource';
+const pkgUp = require('pkg-up');
+
+pkgUp().then(filepath => {
+    console.log('filepath', filepath);
+    const root = path.dirname(filepath);
+    fs.writeFileSync(path.join(root, 'app', 'http', 'controllers', type, `${lcfirst(controllerName)}.controller.js`),
+`'use strict';
+
+class ${ucfirst(controllerName)}Controller {
+
+    controller (models, services) {
+        this.models = models;
+        this.services = services;
+    }
+    
+    index (req, res, next) {
+    
+    }
+    
+    create (req, res, next) {
+    
+    }
+        
+    store (req, res, next) {
+    
+    }
+            
+    show (req, res, next) {
+    
+    }
+                
+    edit (req, res, next) {
+    
+    }
+                    
+    update (req, res, next) {
+    
+    } 
+                       
+    destroy (req, res, next) {
+    
+    }                       
+}
+
+module.exports = (models, services) => {
+    return new ${ucfirst(controllerName)}Controller(models, services);
+};
+
+`
+    );
+});
+
+function lcfirst(string)
+{
+    return string.charAt(0).toLowerCase() + string.slice(1);
+}
+
+function ucfirst(string)
+{
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
