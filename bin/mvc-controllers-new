@@ -2,6 +2,7 @@
 
 'use strict';
 
+console.log('new');
 const program = require('commander');
 
 program
@@ -13,6 +14,7 @@ const controllerName = program.args[0];
 const type = program.args[1] || 'resource';
 const pkgUp = require('pkg-up');
 
+
 pkgUp().then(filepath => {
     console.log('filepath', filepath);
     const root = path.dirname(filepath);
@@ -21,7 +23,7 @@ pkgUp().then(filepath => {
 
 class ${ucfirst(controllerName)}Controller {
 
-    controller (models, services) {
+    constructor (models, services) {
         this.models = models;
         this.services = services;
     }

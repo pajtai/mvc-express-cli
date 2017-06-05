@@ -10,7 +10,7 @@ npm install -g mvc-express-cli
 
 ## Usage
 
-`mvc controller <name> [type]`
+`mvc controllers new <name> [type]`
 
 ```bash
 mvc controller Pages
