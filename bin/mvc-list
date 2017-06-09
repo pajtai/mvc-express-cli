@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const program = require('commander');
+
+// pass in node env to mvc-express to not actually startup / boot
+program
+    .parse(process.argv);
+
+const path = require('path');
+const fs = require('fs');
+const pkgUp = require('pkg-up');
+
+pkgUp().then(filepath => {
+
+    const root = path.dirname(filepath);
+
+    console.log('Using', path.join(root, 'app'), 'for the app root.');
+
+    process.env.MVC_EXPRESS_LISTEN = false;
+    require(path.join(root, 'app'));
+
+    let mvc;
+    try {
+        mvc = require(path.join(root, 'node_modules', 'mvc-express'));
+    } catch (e) {
+        console.log('No node module, assuming using in demo');
+        mvc = require(path.join(root, '..', '..', 'index'));
+    }
+    mvc.promise.then(() => {
+        mvc.services && (console.log('\n\nServices available:'), Object.keys(mvc.services).forEach(service => console.log(`    ${service}`)));
+        mvc.models && (console.log('\n\nModels available:'), Object.keys(mvc.models).forEach(model => console.log(`    ${model}`)));
+        mvc.controllers && (console.log('\n\nControllers available:'), Object.keys(mvc.controllers).forEach(controller => console.log(`    ${controller}`)));
+    });
+
+});

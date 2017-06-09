@@ -16,8 +16,10 @@ const pkgUp = require('pkg-up');
 
 
 pkgUp().then(filepath => {
-    console.log('filepath', filepath);
     const root = path.dirname(filepath);
+
+    console.log('Using', path.join(root, 'app'), 'for the app root.');
+
     fs.writeFileSync(path.join(root, 'app', 'http', 'controllers', type, `${lcfirst(controllerName)}.controller.js`),
 `'use strict';
 

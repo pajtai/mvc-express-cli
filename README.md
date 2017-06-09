@@ -10,7 +10,11 @@ npm install -g mvc-express-cli
 
 ## Usage
 
-`mvc controllers new <name> [type]`
+### `mvc list`
+
+This will list all of your available controllers, models, and services.
+
+### `mvc controllers new <name> [type]`
 
 ```bash
 mvc controller Pages
